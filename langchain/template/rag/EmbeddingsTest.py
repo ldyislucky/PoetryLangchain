@@ -40,7 +40,12 @@ instruction = "为这个句子生成表示以用于检索相关文章："  # 指
 
 # 加载本地预训练模型
 model_path = "D:/D/document/donotdelete/models/bge-small-zh/bge-small-zh-v1.5"
-# 模型路径：指向本地存储的SentenceTransformer模型文件夹，需包含pytorch_model.bin等必要文件
+
+"""
+模型路径：指向本地存储的SentenceTransformer模型文件夹，需包含pytorch_model.bin等必要文件；
+如果本地没有模型，根据官网示例直接写模型名称就行，但是这样老报模型匹配不上的错
+所以还是用本地方式就行，不要用官网的示例
+"""
 model = SentenceTransformer(model_path)
 
 # 对查询进行编码，生成查询嵌入向量
