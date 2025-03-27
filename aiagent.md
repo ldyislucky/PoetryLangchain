@@ -153,7 +153,7 @@ SetX TAVILY_API_KEY "..."
 
 tavily官网:https://tavily.com/
 
-5、embeddings-语义理解
+# 5、embeddings-语义理解
 
 将语义理解模型下载至本地（以bge-small-zh-v1.5为例）
 
@@ -165,7 +165,53 @@ git lfs install
 git clone https://huggingface.co/BAAI/bge-small-zh-v1.5
 ```
 
-python代码使用说明举例
+python代码使用FlagEmbedding说明举例
+
+```python
+from FlagEmbedding import FlagModel
+
+# 初始化FlagModel模型
+# 参数说明：
+# - model_path: 模型路径，指向预训练模型的存储位置
+# - query_instruction_for_retrieval: 为检索任务添加的指令，用于生成查询的表示
+# - use_fp16: 是否使用半精度浮点数（FP16）加速计算，可能会略微降低性能
+model = FlagModel('D:/D/document/donotdelete/models/bge-small-zh/bge-small-zh-v1.5',
+                  query_instruction_for_retrieval="为这个句子生成表示以用于检索相关文章：",
+                  use_fp16=True)
+
+# 定义两个句子列表，用于生成嵌入向量
+sentences_1 = ["样例数据-1", "样例数据-2"]
+sentences_2 = ["样例数据-3", "样例数据-4"]
+
+# 使用模型对句子列表进行编码，生成对应的嵌入向量
+embeddings_1 = model.encode(sentences_1)
+embeddings_2 = model.encode(sentences_2)
+
+# 计算两个嵌入向量集合的相似度矩阵
+similarity = embeddings_1 @ embeddings_2.T
+print(similarity)
+
+print("\n===============================\n")
+
+# 对于短查询到长文档（s2p）的检索任务，建议使用encode_queries()方法
+# 该方法会自动为每个查询添加指令，适合处理短查询
+# 而文档集合可以继续使用encode()或encode_corpus()方法，因为它们不需要额外指令
+queries = ['query_1', 'query_2']
+passages = ["样例文档-1", "样例文档-2"]
+
+# 对查询和文档分别生成嵌入向量
+q_embeddings = model.encode_queries(queries)
+p_embeddings = model.encode(passages)
+
+# 计算查询与文档之间的相似度得分矩阵
+scores = q_embeddings @ p_embeddings.T
+print(scores)
+
+```
+
+
+
+python代码使用sentence_transformers说明举例
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -198,5 +244,45 @@ for query, score in zip(queries, scores):
     for passage, score in zip(passages, score):
         # 打印每个文档及其与当前查询的相似度分数
         print(f"passage: {passage}, score: {score}")
+```
+
+python代码使用Langchain说明举例
+
+```python
+from langchain_huggingface import HuggingFaceEmbeddings
+
+# 初始化 HuggingFaceBgeEmbeddings 模型的配置和实例化
+# 参数说明：
+# - model_name: 指定使用的预训练模型名称或路径，例如 "BAAI/bge-large-en-v1.5"。
+# - model_kwargs: 模型加载时的额外参数，例如指定设备为 'cuda' 以使用 GPU 加速。
+# - encode_kwargs: 编码时的额外参数，例如设置 'normalize_embeddings' 为 True 以计算余弦相似度。
+# - query_instruction: 查询指令，用于生成句子表示以支持检索任务。
+# 返回值：无（代码片段未包含返回值逻辑）
+
+model_name = "D:/D/document/donotdelete/models/bge-small-zh/bge-small-zh-v1.5"  # 指定使用的预训练模型名称
+
+# 配置模型加载参数，指定设备为 GPU（如果可用），则需修改为 'cuda'
+model_kwargs = {'device': 'cpu'}
+
+# 配置编码参数，设置 normalize_embeddings 为 True 以支持余弦相似度计算
+encode_kwargs = {'normalize_embeddings': True}
+
+# 实例化 HuggingFaceBgeEmbeddings 模型，传入模型名称、加载参数、编码参数和查询指令
+model = HuggingFaceEmbeddings(
+    model_name=model_name,
+    model_kwargs=model_kwargs,
+    encode_kwargs=encode_kwargs,
+)
+
+def generate_query_embedding(query: str):
+    # 手动拼接查询指令
+    full_query = f"为这个句子生成表示以用于检索相关文章：{query}"
+    return model.embed_query(full_query)
+
+# 示例调用
+query = "这是一段测试文本"
+embedding = generate_query_embedding(query)
+print(embedding)
+
 ```
 
