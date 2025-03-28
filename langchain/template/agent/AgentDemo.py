@@ -3,7 +3,6 @@
 """
 
 from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import Tool
 from langchain_deepseek import ChatDeepSeek
@@ -16,7 +15,7 @@ prompt_template = ChatPromptTemplate.from_messages([
                 2. 如果问题需要外部信息，使用工具调用。
                 3. 当获得足够信息后，直接给出最终答案，停止工具调用。
                 """),
-    HumanMessage(content="{input}"),  # 注意这里的变量名是 {input}
+    ("human", "{input}"),  # 注意这里的变量名是 {input}
 ])
 
 # 创建模型
