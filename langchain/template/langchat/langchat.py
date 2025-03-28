@@ -61,7 +61,10 @@ print(resp2.content)
 
 # 第3轮： 返回的数据是流式的
 config = {'configurable': {'session_id': 'lis2323'}}  # 给当前会话定义一个sessionId
-for resp in do_message.stream({'my_msg': [HumanMessage(content='请给我讲一个笑话？')], 'language': 'English'},
+for resp in do_message.stream({'my_msg': [HumanMessage(content='请给我讲一个笑话？')], 'language': '中文'},
                               config=config):
     # 每一次resp都是一个token
     print(resp.content, end='-')
+
+print("\n=========================\n")
+print(store)

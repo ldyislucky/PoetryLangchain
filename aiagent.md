@@ -1,14 +1,15 @@
 # 1、大体架构方案
 
-| 类别     | 技术方案                 | 说明                                                         |
-| -------- | ------------------------ | ------------------------------------------------------------ |
-| 基础模型 | DeepSeek-API             | 采用官方API进行模型调用，支持文本生成、意图识别、代码生成等场景 |
-| 云平台   | 阿里云/腾讯云            | 选择容器服务+Serverless组合，按需弹性伸缩                    |
-| 开发框架 | FastAPI + LangChain      | 快速构建Agent逻辑，支持工具调用链                            |
-| 部署架构 | Kubernetes + Docker      | 容器化部署保障环境一致性                                     |
-| 数据存储 | Redis + PostgreSQL + OSS | 分级存储：缓存/结构化数据/文件存储                           |
-| 消息队列 | RocketMQ                 | 异步处理高并发请求                                           |
-| 监控体系 | Prometheus + Grafana     | 实时监控API调用、资源使用情况（学习使用langsmith代替）       |
+| 类别         | 技术方案                 | 说明                                                         |
+| ------------ | ------------------------ | ------------------------------------------------------------ |
+| 基础模型     | DeepSeek-API             | 采用官方API进行模型调用，支持文本生成、意图识别、代码生成等场景 |
+| 云平台       | 阿里云/腾讯云            | 选择容器服务+Serverless组合，按需弹性伸缩                    |
+| 开发框架     | FastAPI + LangChain      | 快速构建Agent逻辑，支持工具调用链                            |
+| 部署架构     | Kubernetes + Docker      | 容器化部署保障环境一致性                                     |
+| 数据存储     | Redis + PostgreSQL + OSS | 分级存储：缓存/结构化数据/文件存储                           |
+| 消息队列     | RocketMQ                 | 异步处理高并发请求                                           |
+| 监控体系     | Prometheus + Grafana     | 实时监控API调用、资源使用情况（学习使用langsmith代替）语义   |
+| 语义理解模型 | huggingface              | 使用中文 bge-large-zh-v1.5 模型                              |
 
 ```text
                           +-------------------+
@@ -209,8 +210,6 @@ print(scores)
 
 ```
 
-
-
 python代码使用sentence_transformers说明举例
 
 ```python
@@ -284,5 +283,34 @@ query = "这是一段测试文本"
 embedding = generate_query_embedding(query)
 print(embedding)
 
+```
+
+# 6、RAG+langchat
+
+```mermaid
+flowchart LR
+    subgraph 用户输入
+        A[用户提问] --> B[调用result_chain.invoke]
+    end
+
+    subgraph 历史管理
+        B --> C{检查session_id}
+        C -->|存在| D[从store读取历史记录]
+        C -->|不存在| E[创建新ChatMessageHistory]
+        D/E --> F[将当前输入和历史记录合并]
+    end
+
+    subgraph 历史感知检索
+        F --> G[历史感知子链]
+        G --> H[重写问题（解决指代）]
+        H --> I[检索相关文档]
+    end
+
+    subgraph 生成回答
+        I --> J[结合历史+文档生成回答]
+        J --> K[保存回答到历史记录]
+    end
+
+    K --> L[返回最终答案]
 ```
 
