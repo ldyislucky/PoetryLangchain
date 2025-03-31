@@ -1,4 +1,4 @@
-from langchain.tool.db.DbTool import DbTool
+from tool.db.DbTool import DbTool
 
 str = "SELECT * FROM employee"
 
