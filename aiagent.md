@@ -1,15 +1,15 @@
 # 1、大体架构方案
 
-| 类别         | 技术方案                 | 说明                                                         |
-| ------------ | ------------------------ | ------------------------------------------------------------ |
-| 基础模型     | DeepSeek-API             | 采用官方API进行模型调用，支持文本生成、意图识别、代码生成等场景 |
-| 云平台       | 阿里云/腾讯云            | 选择容器服务+Serverless组合，按需弹性伸缩                    |
-| 开发框架     | FastAPI + LangChain      | 快速构建Agent逻辑，支持工具调用链                            |
-| 部署架构     | Kubernetes + Docker      | 容器化部署保障环境一致性                                     |
-| 数据存储     | Redis + PostgreSQL + OSS | 分级存储：缓存/结构化数据/文件存储                           |
-| 消息队列     | RocketMQ                 | 异步处理高并发请求                                           |
-| 监控体系     | Prometheus + Grafana     | 实时监控API调用、资源使用情况（学习使用langsmith代替）语义   |
-| 语义理解模型 | huggingface              | 使用中文 bge-large-zh-v1.5 模型                              |
+| 类别         | 技术方案             | 说明                                                         |
+| ------------ | -------------------- | ------------------------------------------------------------ |
+| 基础模型     | DeepSeek-API         | 采用官方API进行模型调用，支持文本生成、意图识别、代码生成等场景 |
+| 云平台       | 阿里云/腾讯云        | 选择容器服务+Serverless组合，按需弹性伸缩                    |
+| 开发框架     | FastAPI + LangChain  | 快速构建Agent逻辑，支持工具调用链                            |
+| 部署架构     | Kubernetes + Docker  | 容器化部署保障环境一致性                                     |
+| 数据存储     | Redis + mysql + OSS  | 分级存储：缓存/结构化数据/文件存储                           |
+| 消息队列     | RocketMQ             | 异步处理高并发请求                                           |
+| 监控体系     | Prometheus + Grafana | 实时监控API调用、资源使用情况（学习使用langsmith代替）语义   |
+| 语义理解模型 | huggingface          | 使用中文 bge-large-zh-v1.5 模型                              |
 
 ```mermaid
 graph TD
@@ -20,7 +20,7 @@ graph TD
     C --> F["Agent核心\n(LangChain)"]
     D --> G["任务处理器\n(Celery)"]
     F --> G
-    G --> H["数据库集群\n(PG+Redis)"]
+    G --> H["数据库集群\n(mysql+Redis)"]
     F --> I["DeepSeek API\n(模型服务)"]
     E -.-> C
 ```

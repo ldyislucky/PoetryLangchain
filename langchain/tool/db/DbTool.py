@@ -24,8 +24,10 @@ class DbTool:
         except Error as e:
             print("Error:", e)
             return None
-        finally:
-            # 资源清理：无论是否发生异常都执行连接关闭操作
-            if self.conn.is_connected():
-                self.cursor.close()
-                self.conn.close()
+    def close(self):
+        if self.conn.is_connected():
+            self.cursor.close()
+            self.conn.close()
+            print("数据库连接已关闭")
+        else:
+            print("数据库连接已关闭")
