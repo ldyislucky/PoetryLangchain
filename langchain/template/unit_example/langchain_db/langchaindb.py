@@ -10,6 +10,18 @@ from langchain_core.runnables import RunnableLambda
 
 from tool.db.DbTool import DbTool
 
+import logging
+from langchain.globals import set_debug
+
+# 启用LangChain调试模式
+set_debug(True)
+
+# 设置日志级别
+logging.basicConfig(level=logging.DEBUG)
+
+
+
+
 # 初始化模型
 model = ChatDeepSeek(model="deepseek-chat", max_tokens=200)
 
@@ -19,7 +31,7 @@ dburl = dbtool.get_url()
 
 db = SQLDatabase.from_uri(dburl)
 # 创建 SQL 查询链
-chain = create_sql_query_chain(model, db)
+chain = create_sql_query_chain(model, db)#.with_config({"verbose": True})
 question = "请查询所有菜品?"
 
 # result = chain.invoke({"question": "请查询所有菜品"})
@@ -49,7 +61,7 @@ chain1 = (
     | answer_prompt
     | model
     | StrOutputParser()
-)
+)#.with_config({"verbose": True})
 
 
 
