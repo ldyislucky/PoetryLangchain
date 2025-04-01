@@ -352,7 +352,3 @@ retrieval_chain = create_retrieval_chain(retriever, document_chain)
 
 
 
-```mermaid
-
-```
-
