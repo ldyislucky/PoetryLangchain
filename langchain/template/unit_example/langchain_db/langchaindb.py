@@ -43,9 +43,9 @@ execute_sql_tool = QuerySQLDataBaseTool(db=db)
 
 
 # 将 result 包装为 RunnableLambda
-chain = (
-    RunnablePassthrough.assign(query=RunnableLambda(lambda _: result))
-    .assign(result=lambda inputs: execute_sql_tool.invoke(inputs["query"]))
+chain1 = (
+    RunnablePassthrough.assign(query=RunnableLambda(lambda _: result))   # 此处添加了 query 键值对
+    .assign(result=lambda inputs: execute_sql_tool.invoke(inputs["query"]))   # 此处添加了 result 键值对，传入的参数为query键值对的值
     | answer_prompt
     | model
     | StrOutputParser()
@@ -53,5 +53,5 @@ chain = (
 
 
 
-rep = chain.invoke(input={'question': question})
+rep = chain1.invoke(input={'question': question})
 print(rep)
