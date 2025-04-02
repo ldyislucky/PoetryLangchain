@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langserve import RemoteRunnable
 
 promt = ChatPromptTemplate.from_template("讲一个关于{type}笑话,50字以内。以json格式返回")
-#langserver 的url调用方式
+#langserve 的url调用方式
 model = RemoteRunnable("http://127.0.0.1:8000//deepseekapi")
 parser = JsonOutputParser()
 

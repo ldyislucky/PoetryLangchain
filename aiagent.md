@@ -48,7 +48,7 @@ pip uninstall -r requirements.txt -y
 
 # 4、langchain
 
-## 4.1、langserver配置
+## 4.1、langserve配置
 
 这个操作流程存在混合使用pip和Poetry导致依赖管理混乱的问题，纠正后的全Poetry操作流程如下：
 
@@ -66,9 +66,9 @@ pip install -U langchain-cli  #是 LangChain 的命令行工具
 
 2. 创建项目（在项目目录外执行）
 ```bash
-# 如果使用poetry new langserver新建项目，后边可能还需要执行第4步
-langchain app new langserver
-cd langserver
+# 如果使用poetry new langchain新建项目，后边可能还需要执行第4步
+langchain app new langchain
+cd langchain
 
 解决冲突的办法是去掉pyproject.toml中的pydantic = "<2"
 

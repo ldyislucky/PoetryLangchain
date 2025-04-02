@@ -9,12 +9,13 @@ app = FastAPI(
     version="1.0"
 )
 
+
+
 add_routes(
     app,
     ChatDeepSeek(model="deepseek-chat",max_tokens=100),
     path="/deepseekapi",
 )
-
 
 @app.get("/")
 async def redirect_root_to_docs():
