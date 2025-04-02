@@ -5,14 +5,15 @@ import time
 import threading
 
 def sing(msg):
+    time.sleep(2)
     print(msg)
-    time.sleep(1)
+
 
 
 
 def dance(msg):
-    print(msg)
     time.sleep(1)
+    print(msg)
 
 
 if __name__ == '__main__':
