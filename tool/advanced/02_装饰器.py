@@ -32,6 +32,7 @@ def outer(func):
     return inner
 
 
+@outer # 将 `sleep` 函数传递给 `outer` 函数
 @outer
 def sleep():
     import random
