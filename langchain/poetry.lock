@@ -2316,6 +2316,27 @@ url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 reference = "tuna"
 
 [[package]]
+name = "langchain-experimental"
+version = "0.3.4"
+description = "Building applications with LLMs through composability"
+optional = false
+python-versions = ">=3.9,<4.0"
+groups = ["main"]
+files = [
+    {file = "langchain_experimental-0.3.4-py3-none-any.whl", hash = "sha256:2e587306aea36b60fa5e5fc05dc7281bee9f60a806f0bf9d30916e0ee096af80"},
+    {file = "langchain_experimental-0.3.4.tar.gz", hash = "sha256:937c4259ee4a639c618d19acf0e2c5c2898ef127050346edc5655259aa281a21"},
+]
+
+[package.dependencies]
+langchain-community = ">=0.3.0,<0.4.0"
+langchain-core = ">=0.3.28,<0.4.0"
+
+[package.source]
+type = "legacy"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tuna"
+
+[[package]]
 name = "langchain-huggingface"
 version = "0.1.2"
 description = "An integration package connecting Hugging Face and LangChain"
@@ -7086,4 +7107,4 @@ reference = "tuna"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "018f90e5192fee1147e8456a6e0863f46c8e462abf6c411326d911dbc3c5824e"
+content-hash = "032218f11de9830ce44f999e716a86d891e023e4129101f252ccceab09ba9a9d"
