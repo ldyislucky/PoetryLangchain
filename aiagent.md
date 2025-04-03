@@ -52,8 +52,9 @@ pip uninstall -r requirements.txt -y
 
 这个操作流程存在混合使用pip和Poetry导致依赖管理混乱的问题，纠正后的全Poetry操作流程如下：
 
-1. 安装全局工具（在任意目录执行）
-```bash
+### 安装全局工具（在任意目录执行）
+
+```powershell
 # 安装 pipx（Python工具隔离管理）
 python -m pip install --user pipx
 python -m pipx ensurepath
@@ -61,40 +62,66 @@ python -m pipx ensurepath
 # 通过 pipx 安装 poetry
 pipx install poetry
 
+# 配置虚拟环境放在项目目录内
+poetry config virtualenvs.in-project true
+
 pip install -U langchain-cli  #是 LangChain 的命令行工具
 ```
 
-2. 创建项目（在项目目录外执行）
+### 创建项目（在项目目录外执行）
+
 ```bash
-# 如果使用poetry new langchain新建项目，后边可能还需要执行第4步，暂定建议使用poetry new langchain
-langchain app new langchain
-cd langchain
-
-解决冲突的办法是去掉pyproject.toml中的pydantic = "<2"
-
-# 初始化配置（根据需要调整pyproject.toml）
+poetry new my_project  # 自动生成项目目录结构
+cd my_project
 ```
 
-3. 统一用Poetry管理依赖（在项目目录执行）
+### 管理虚拟环境
+
+ 安装依赖（自动创建虚拟环境，只有在c盘才能自动创建虚拟空间成功，D盘就会失败）：
+
+```
+poetry install  # 安装pyproject.toml中所有依赖
+```
+
+激活虚拟环境：
+
+```
+poetry env info  # 进入虚拟环境
+```
+
+退出虚拟环境：
+
+```
+exit
+```
+
+### 管理依赖
+
 ```bash
 # 安装核心依赖（替代原pip安装步骤）
 poetry add "langserve[all]"   #超时问题可以单独安装某个依赖，eg: poetry add anyio
 poetry add langchain-deepseek
 poetry add langchain-community
+解决冲突的办法是去掉pyproject.toml中的pydantic = "<2"
 
 # 可以继续添加其他依赖
 poetry add langchain
 ```
 
-4. 项目配置和代码修改
+### 项目配置和代码修改
+
 ```bash
 # 创建服务文件（手动创建app/server.py）
 # 按原需求修改server.py内容
 ```
 
-5. 运行服务（在项目目录执行）
+### 运行服务（在项目目录执行）
+
 ```bash
-# 在 poetry 虚拟环境中启动服务
+# 启动fastapi
+uvicorn （要启动的模块，不带.py）:app --reload --port 8002
+
+# 在 poetry 虚拟环境中启动langserve
 poetry run langchain serve
 ```
 
