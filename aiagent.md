@@ -77,7 +77,7 @@ cd my_project
 
 ### 管理虚拟环境
 
- 安装依赖（自动创建虚拟环境，只有在c盘才能自动创建虚拟空间成功，D盘就会失败，最后D盘改了个项目名虚拟环境就又创建成功了）：
+ 安装依赖（必须在当前目录的上级目录执行poetry config virtualenvs.in-project true之后，项目内的虚拟环境才能创建成功）：
 
 ```
 poetry install  # 安装pyproject.toml中所有依赖
