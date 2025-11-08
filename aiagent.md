@@ -62,15 +62,15 @@ python -m pipx ensurepath
 # 通过 pipx 安装 poetry
 pipx install poetry
 
-# 如果不是第一次创建poetry从这里开始，配置虚拟环境放在项目目录内
-poetry config virtualenvs.in-project true
-
 pip install -U langchain-cli  #是 LangChain 的命令行工具
 ```
 
 ### 创建项目（在项目目录外执行）
 
 ```bash
+# 如果不是第一次创建poetry从这里开始，配置虚拟环境放在项目目录内
+poetry config virtualenvs.in-project true
+
 poetry new my_project  # 自动生成项目目录结构
 cd my_project
 ```
