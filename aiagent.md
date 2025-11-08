@@ -55,14 +55,14 @@ pip uninstall -r requirements.txt -y
 ### 安装全局工具（在任意目录执行）
 
 ```powershell
-# 安装 pipx（Python工具隔离管理）
+# 第一次创建poetry从这里开始，安装 pipx（Python工具隔离管理）
 python -m pip install --user pipx
 python -m pipx ensurepath
 
 # 通过 pipx 安装 poetry
 pipx install poetry
 
-# 配置虚拟环境放在项目目录内
+# 如果不是第一次创建poetry从这里开始，配置虚拟环境放在项目目录内
 poetry config virtualenvs.in-project true
 
 pip install -U langchain-cli  #是 LangChain 的命令行工具
