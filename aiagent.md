@@ -50,7 +50,7 @@ pip uninstall -r requirements.txt -y
 
 ## 4.1、Poetry初始化工程
 
-这个操作流程存在混合使用pip和Poetry导致依赖管理混乱的问题，纠正后的全Poetry操作流程如下：
+对于存在混合使用pip和Poetry导致依赖管理混乱的问题，纠正后的全Poetry操作流程如下：
 
 ### 安装全局工具（在任意目录执行）
 
