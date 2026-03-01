@@ -98,6 +98,11 @@ exit
 ### 管理依赖
 
 ```bash
+# 如果要创建django项目就运行这3段命令，不涉及django就忽略这3个命令
+ portry add django
+ poetry run django-admin startproject config .
+ python manage.py runserver  # django服务启动
+
 # 安装核心依赖（替代原pip安装步骤）
 poetry add "langserve[all]"   #超时问题可以单独安装某个依赖，eg: poetry add anyio
 poetry add langchain-deepseek
