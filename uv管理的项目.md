@@ -55,7 +55,7 @@ uv venv
 uv sync
 
 # 如果有需要配置一下uv镜像源
-uv config set pip.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+uv pip install fastmcp --index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ------
