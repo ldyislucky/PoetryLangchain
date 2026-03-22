@@ -53,6 +53,9 @@ uv venv
 ```bash
 # 克隆项目后，可执行此命令一键还原环境。
 uv sync
+
+# 如果有需要配置一下uv镜像源
+uv config set pip.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ------
